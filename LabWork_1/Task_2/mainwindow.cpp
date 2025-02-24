@@ -1,24 +1,59 @@
 #include "mainwindow.h"
-#include <QMouseEvent>
+#include <QHBoxLayout>
+#include <QVBoxLayout>
+#include <QAction>
+#include <QFrame>
 
 MainWindow::MainWindow(QWidget* parent)
-    : QMainWindow(parent), m_circle(new Circle(this)) {
-    setCentralWidget(m_circle);
-    setWindowTitle("Paint");
+    : QMainWindow(parent),
+    m_canvas(new Canvas(this)),
+    m_btnMenu(new QToolButton(this)),
+    m_shapeMenu(new QMenu(this))
+{
+
+    setWindowTitle("Рисовалка фигур");
     resize(800, 600);
+
+    m_btnMenu->setText("Фигуры");
+    m_btnMenu->setFixedSize(100, 30);
+    m_btnMenu->setPopupMode(QToolButton::InstantPopup);
+
+    QAction* actionCircle = new QAction("Круг", this);
+    QAction* actionSquare = new QAction("Квадрат", this);
+    m_shapeMenu->addAction(actionCircle);
+    m_shapeMenu->addAction(actionSquare);
+    m_btnMenu->setMenu(m_shapeMenu);
+
+    // Контейнер для кнопки (правый верхний угол)
+    QWidget* topPanel = new QWidget(this);
+    QHBoxLayout* topLayout = new QHBoxLayout(topPanel);
+    topLayout->setContentsMargins(0, 10, 10, 0); // Отступ справа 10px
+    topLayout->addStretch(); // Растягиваемое пространство слева
+    topLayout->addWidget(m_btnMenu);
+
+    // Основной layout
+    QWidget* centralWidget = new QWidget(this);
+    QVBoxLayout* mainLayout = new QVBoxLayout(centralWidget);
+    mainLayout->setSpacing(0);
+    mainLayout->setContentsMargins(0, 0, 0, 0); // Убрать все отступы
+
+    mainLayout->addWidget(topPanel);
+    mainLayout->addWidget(m_canvas, 1); // stretch factor = 1
+
+    centralWidget->setLayout(mainLayout);
+    setCentralWidget(centralWidget);
+
+    // Сигналы и слоты
+    connect(actionCircle, &QAction::triggered, this, &MainWindow::selectCircle);
+    connect(actionSquare, &QAction::triggered, this, &MainWindow::selectSquare);
 }
 
-void MainWindow::mousePressEvent(QMouseEvent* event) {
-    if (event->button() == Qt::LeftButton) {
-        m_circle->startDrawing(event->pos());
-    }
+void MainWindow::selectCircle() {
+    m_canvas->setShapeType(Canvas::CircleType);
+    m_btnMenu->setText("Круг");
 }
 
-void MainWindow::mouseMoveEvent(QMouseEvent* event) {
-    m_circle->updateShape(event->pos());
-}
-
-void MainWindow::mouseReleaseEvent(QMouseEvent* event) {
-    Q_UNUSED(event);
-    // Для завершения рисования можно добавить логику
+void MainWindow::selectSquare() {
+    m_canvas->setShapeType(Canvas::SquareType);
+    m_btnMenu->setText("Квадрат");
 }

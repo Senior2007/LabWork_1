@@ -52,19 +52,21 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       = ../../circle.cpp \
+SOURCES       = ../../canvas.cpp \
+		../../circle.cpp \
 		../../main.cpp \
 		../../mainwindow.cpp \
-		../../shape.cpp moc_circle.cpp \
-		moc_mainwindow.cpp \
-		moc_shape.cpp
-OBJECTS       = circle.o \
+		../../shape.cpp \
+		../../square.cpp moc_canvas.cpp \
+		moc_mainwindow.cpp
+OBJECTS       = canvas.o \
+		circle.o \
 		main.o \
 		mainwindow.o \
 		shape.o \
-		moc_circle.o \
-		moc_mainwindow.o \
-		moc_shape.o
+		square.o \
+		moc_canvas.o \
+		moc_mainwindow.o
 DIST          = /opt/homebrew/share/qt/mkspecs/features/spec_pre.prf \
 		/opt/homebrew/share/qt/mkspecs/features/device_config.prf \
 		/opt/homebrew/Cellar/qt/6.8.2/share/qt/mkspecs/common/unix.conf \
@@ -429,12 +431,16 @@ DIST          = /opt/homebrew/share/qt/mkspecs/features/spec_pre.prf \
 		/opt/homebrew/share/qt/mkspecs/features/exceptions.prf \
 		/opt/homebrew/share/qt/mkspecs/features/yacc.prf \
 		/opt/homebrew/share/qt/mkspecs/features/lex.prf \
-		../../../../Task_2.pro ../../circle.h \
+		../../../../Task_2.pro ../../canvas.h \
+		../../circle.h \
 		../../mainwindow.h \
-		../../shape.h ../../circle.cpp \
+		../../shape.h \
+		../../square.h ../../canvas.cpp \
+		../../circle.cpp \
 		../../main.cpp \
 		../../mainwindow.cpp \
-		../../shape.cpp
+		../../shape.cpp \
+		../../square.cpp
 QMAKE_TARGET  = Task_2
 DESTDIR       = 
 TARGET        = Task_2.app/Contents/MacOS/Task_2
@@ -1221,8 +1227,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /opt/homebrew/share/qt/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../../circle.h ../../mainwindow.h ../../shape.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../../circle.cpp ../../main.cpp ../../mainwindow.cpp ../../shape.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../../canvas.h ../../circle.h ../../mainwindow.h ../../shape.h ../../square.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../../canvas.cpp ../../circle.cpp ../../main.cpp ../../mainwindow.cpp ../../shape.cpp ../../square.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../../mainwindow.ui $(DISTDIR)/
 
 
@@ -1258,46 +1264,37 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /opt/homebrew/share/qt/mkspecs/features/data/dummy.cpp
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ -pipe -stdlib=libc++ -g -std=gnu++1z $(EXPORT_ARCH_ARGS) -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk -mmacosx-version-min=14.0 -Wall -Wextra -dM -E -o moc_predefs.h /opt/homebrew/share/qt/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_circle.cpp moc_mainwindow.cpp moc_shape.cpp
+compiler_moc_header_make_all: moc_canvas.cpp moc_mainwindow.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_circle.cpp moc_mainwindow.cpp moc_shape.cpp
-moc_circle.cpp: ../../circle.h \
+	-$(DEL_FILE) moc_canvas.cpp moc_mainwindow.cpp
+moc_canvas.cpp: ../../canvas.h \
+		/opt/homebrew/lib/QtWidgets.framework/Headers/QWidget \
+		/opt/homebrew/lib/QtWidgets.framework/Headers/qwidget.h \
 		../../shape.h \
-		/opt/homebrew/lib/QtCore.framework/Headers/QObject \
-		/opt/homebrew/lib/QtCore.framework/Headers/qobject.h \
-		/opt/homebrew/lib/QtWidgets.framework/Headers/QGraphicsItem \
-		/opt/homebrew/lib/QtWidgets.framework/Headers/qgraphicsitem.h \
 		/opt/homebrew/lib/QtGui.framework/Headers/QPainter \
 		/opt/homebrew/lib/QtGui.framework/Headers/qpainter.h \
-		/opt/homebrew/lib/QtCore.framework/Headers/QTimer \
-		/opt/homebrew/lib/QtCore.framework/Headers/qtimer.h \
-		/opt/homebrew/lib/QtCore.framework/Headers/QPointF \
+		/opt/homebrew/lib/QtCore.framework/Headers/QPoint \
 		/opt/homebrew/lib/QtCore.framework/Headers/qpoint.h \
+		../../circle.h \
 		moc_predefs.h \
 		/opt/homebrew/share/qt/libexec/moc
-	/opt/homebrew/share/qt/libexec/moc $(DEFINES) --include /Users/senior/Desktop/BSUIR/ОАиП/QT/LabWork_1/Task_2/build/Desktop_arm_darwin_generic_mach_o_64bit-Debug/moc_predefs.h -I/opt/homebrew/share/qt/mkspecs/macx-clang -I/Users/senior/Desktop/BSUIR/ОАиП/QT/LabWork_1/Task_2 -I/opt/homebrew/lib/QtWidgets.framework/Headers -I/opt/homebrew/lib/QtGui.framework/Headers -I/opt/homebrew/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/16/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/usr/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -F/opt/homebrew/lib ../../circle.h -o moc_circle.cpp
+	/opt/homebrew/share/qt/libexec/moc $(DEFINES) --include /Users/senior/Desktop/BSUIR/ОАиП/QT/LabWork_1/Task_2/build/Desktop_arm_darwin_generic_mach_o_64bit-Debug/moc_predefs.h -I/opt/homebrew/share/qt/mkspecs/macx-clang -I/Users/senior/Desktop/BSUIR/ОАиП/QT/LabWork_1/Task_2 -I/opt/homebrew/lib/QtWidgets.framework/Headers -I/opt/homebrew/lib/QtGui.framework/Headers -I/opt/homebrew/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/16/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/usr/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -F/opt/homebrew/lib ../../canvas.h -o moc_canvas.cpp
 
 moc_mainwindow.cpp: ../../mainwindow.h \
 		/opt/homebrew/lib/QtWidgets.framework/Headers/QMainWindow \
 		/opt/homebrew/lib/QtWidgets.framework/Headers/qmainwindow.h \
+		../../canvas.h \
+		/opt/homebrew/lib/QtWidgets.framework/Headers/QWidget \
+		/opt/homebrew/lib/QtWidgets.framework/Headers/qwidget.h \
+		../../shape.h \
+		/opt/homebrew/lib/QtGui.framework/Headers/QPainter \
+		/opt/homebrew/lib/QtGui.framework/Headers/qpainter.h \
+		/opt/homebrew/lib/QtCore.framework/Headers/QPoint \
+		/opt/homebrew/lib/QtCore.framework/Headers/qpoint.h \
+		../../circle.h \
 		moc_predefs.h \
 		/opt/homebrew/share/qt/libexec/moc
 	/opt/homebrew/share/qt/libexec/moc $(DEFINES) --include /Users/senior/Desktop/BSUIR/ОАиП/QT/LabWork_1/Task_2/build/Desktop_arm_darwin_generic_mach_o_64bit-Debug/moc_predefs.h -I/opt/homebrew/share/qt/mkspecs/macx-clang -I/Users/senior/Desktop/BSUIR/ОАиП/QT/LabWork_1/Task_2 -I/opt/homebrew/lib/QtWidgets.framework/Headers -I/opt/homebrew/lib/QtGui.framework/Headers -I/opt/homebrew/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/16/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/usr/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -F/opt/homebrew/lib ../../mainwindow.h -o moc_mainwindow.cpp
-
-moc_shape.cpp: ../../shape.h \
-		/opt/homebrew/lib/QtCore.framework/Headers/QObject \
-		/opt/homebrew/lib/QtCore.framework/Headers/qobject.h \
-		/opt/homebrew/lib/QtWidgets.framework/Headers/QGraphicsItem \
-		/opt/homebrew/lib/QtWidgets.framework/Headers/qgraphicsitem.h \
-		/opt/homebrew/lib/QtGui.framework/Headers/QPainter \
-		/opt/homebrew/lib/QtGui.framework/Headers/qpainter.h \
-		/opt/homebrew/lib/QtCore.framework/Headers/QTimer \
-		/opt/homebrew/lib/QtCore.framework/Headers/qtimer.h \
-		/opt/homebrew/lib/QtCore.framework/Headers/QPointF \
-		/opt/homebrew/lib/QtCore.framework/Headers/qpoint.h \
-		moc_predefs.h \
-		/opt/homebrew/share/qt/libexec/moc
-	/opt/homebrew/share/qt/libexec/moc $(DEFINES) --include /Users/senior/Desktop/BSUIR/ОАиП/QT/LabWork_1/Task_2/build/Desktop_arm_darwin_generic_mach_o_64bit-Debug/moc_predefs.h -I/opt/homebrew/share/qt/mkspecs/macx-clang -I/Users/senior/Desktop/BSUIR/ОАиП/QT/LabWork_1/Task_2 -I/opt/homebrew/lib/QtWidgets.framework/Headers -I/opt/homebrew/lib/QtGui.framework/Headers -I/opt/homebrew/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/16/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/usr/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -F/opt/homebrew/lib ../../shape.h -o moc_shape.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -1322,58 +1319,73 @@ compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean compiler_ui
 
 ####### Compile
 
-circle.o: ../../circle.cpp ../../circle.h \
+canvas.o: ../../canvas.cpp ../../canvas.h \
+		/opt/homebrew/lib/QtWidgets.framework/Headers/QWidget \
+		/opt/homebrew/lib/QtWidgets.framework/Headers/qwidget.h \
 		../../shape.h \
-		/opt/homebrew/lib/QtCore.framework/Headers/QObject \
-		/opt/homebrew/lib/QtCore.framework/Headers/qobject.h \
-		/opt/homebrew/lib/QtWidgets.framework/Headers/QGraphicsItem \
-		/opt/homebrew/lib/QtWidgets.framework/Headers/qgraphicsitem.h \
 		/opt/homebrew/lib/QtGui.framework/Headers/QPainter \
 		/opt/homebrew/lib/QtGui.framework/Headers/qpainter.h \
-		/opt/homebrew/lib/QtCore.framework/Headers/QTimer \
-		/opt/homebrew/lib/QtCore.framework/Headers/qtimer.h \
-		/opt/homebrew/lib/QtCore.framework/Headers/QPointF \
+		/opt/homebrew/lib/QtCore.framework/Headers/QPoint \
 		/opt/homebrew/lib/QtCore.framework/Headers/qpoint.h \
-		/opt/homebrew/lib/QtWidgets.framework/Headers/QGraphicsSceneMouseEvent \
-		/opt/homebrew/lib/QtWidgets.framework/Headers/qgraphicssceneevent.h
+		../../circle.h \
+		/opt/homebrew/lib/QtGui.framework/Headers/QMouseEvent \
+		/opt/homebrew/lib/QtGui.framework/Headers/qevent.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o canvas.o ../../canvas.cpp
+
+circle.o: ../../circle.cpp ../../circle.h \
+		../../shape.h \
+		/opt/homebrew/lib/QtGui.framework/Headers/QPainter \
+		/opt/homebrew/lib/QtGui.framework/Headers/qpainter.h \
+		/opt/homebrew/lib/QtCore.framework/Headers/QPoint \
+		/opt/homebrew/lib/QtCore.framework/Headers/qpoint.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o circle.o ../../circle.cpp
 
-main.o: ../../main.cpp ../../mainwindow.h \
+main.o: ../../main.cpp /opt/homebrew/lib/QtWidgets.framework/Headers/QApplication \
+		/opt/homebrew/lib/QtWidgets.framework/Headers/qapplication.h \
+		../../mainwindow.h \
 		/opt/homebrew/lib/QtWidgets.framework/Headers/QMainWindow \
 		/opt/homebrew/lib/QtWidgets.framework/Headers/qmainwindow.h \
-		/opt/homebrew/lib/QtWidgets.framework/Headers/QApplication \
-		/opt/homebrew/lib/QtWidgets.framework/Headers/qapplication.h
+		../../canvas.h \
+		/opt/homebrew/lib/QtWidgets.framework/Headers/QWidget \
+		/opt/homebrew/lib/QtWidgets.framework/Headers/qwidget.h \
+		../../shape.h \
+		/opt/homebrew/lib/QtGui.framework/Headers/QPainter \
+		/opt/homebrew/lib/QtGui.framework/Headers/qpainter.h \
+		/opt/homebrew/lib/QtCore.framework/Headers/QPoint \
+		/opt/homebrew/lib/QtCore.framework/Headers/qpoint.h \
+		../../circle.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../../main.cpp
 
 mainwindow.o: ../../mainwindow.cpp ../../mainwindow.h \
 		/opt/homebrew/lib/QtWidgets.framework/Headers/QMainWindow \
 		/opt/homebrew/lib/QtWidgets.framework/Headers/qmainwindow.h \
-		ui_mainwindow.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../../mainwindow.cpp
-
-shape.o: ../../shape.cpp ../../shape.h \
-		/opt/homebrew/lib/QtCore.framework/Headers/QObject \
-		/opt/homebrew/lib/QtCore.framework/Headers/qobject.h \
-		/opt/homebrew/lib/QtWidgets.framework/Headers/QGraphicsItem \
-		/opt/homebrew/lib/QtWidgets.framework/Headers/qgraphicsitem.h \
+		../../canvas.h \
+		/opt/homebrew/lib/QtWidgets.framework/Headers/QWidget \
+		/opt/homebrew/lib/QtWidgets.framework/Headers/qwidget.h \
+		../../shape.h \
 		/opt/homebrew/lib/QtGui.framework/Headers/QPainter \
 		/opt/homebrew/lib/QtGui.framework/Headers/qpainter.h \
-		/opt/homebrew/lib/QtCore.framework/Headers/QTimer \
-		/opt/homebrew/lib/QtCore.framework/Headers/qtimer.h \
-		/opt/homebrew/lib/QtCore.framework/Headers/QPointF \
+		/opt/homebrew/lib/QtCore.framework/Headers/QPoint \
 		/opt/homebrew/lib/QtCore.framework/Headers/qpoint.h \
-		/opt/homebrew/lib/QtGui.framework/Headers/QTransform \
-		/opt/homebrew/lib/QtGui.framework/Headers/qtransform.h
+		../../circle.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../../mainwindow.cpp
+
+shape.o: ../../shape.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o shape.o ../../shape.cpp
 
-moc_circle.o: moc_circle.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_circle.o moc_circle.cpp
+square.o: ../../square.cpp ../../square.h \
+		../../shape.h \
+		/opt/homebrew/lib/QtGui.framework/Headers/QPainter \
+		/opt/homebrew/lib/QtGui.framework/Headers/qpainter.h \
+		/opt/homebrew/lib/QtCore.framework/Headers/QPoint \
+		/opt/homebrew/lib/QtCore.framework/Headers/qpoint.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o square.o ../../square.cpp
+
+moc_canvas.o: moc_canvas.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_canvas.o moc_canvas.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
-
-moc_shape.o: moc_shape.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_shape.o moc_shape.cpp
 
 ####### Install
 

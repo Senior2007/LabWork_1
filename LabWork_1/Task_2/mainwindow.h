@@ -2,21 +2,24 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "circle.h"
+#include <QToolButton>
+#include <QMenu>
+#include "canvas.h"
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
 
 public:
-    MainWindow(QWidget* parent = nullptr);
+    explicit MainWindow(QWidget* parent = nullptr);
 
-protected:
-    void mousePressEvent(QMouseEvent* event) override;
-    void mouseMoveEvent(QMouseEvent* event) override;
-    void mouseReleaseEvent(QMouseEvent* event) override;
+private slots:
+    void selectCircle();
+    void selectSquare();
 
 private:
-    Circle* m_circle;
+    Canvas* m_canvas;
+    QToolButton* m_btnMenu;
+    QMenu* m_shapeMenu;
 };
 
 #endif // MAINWINDOW_H

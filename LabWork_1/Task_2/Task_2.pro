@@ -9,15 +9,19 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    canvas.cpp \
     circle.cpp \
     main.cpp \
     mainwindow.cpp \
-    shape.cpp
+    shape.cpp \
+    square.cpp
 
 HEADERS += \
+    canvas.h \
     circle.h \
     mainwindow.h \
-    shape.h
+    shape.h \
+    square.h
 
 FORMS += \
     mainwindow.ui

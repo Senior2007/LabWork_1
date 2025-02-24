@@ -4,19 +4,13 @@
 #include "shape.h"
 
 class Circle : public Shape {
-    Q_OBJECT
-
 public:
-    explicit Circle(QWidget* parent = nullptr);
-
-    void startDrawing(const QPoint& position) override;
-    void updateShape(const QPoint& position) override;
-    void paint(QPainter& painter) const override;
+    Circle(const QPoint& center, int radius);
+    void draw(QPainter& painter) const override;
 
 private:
-    QPoint center;
-    QPoint currentPos;
-    bool isDrawing = false;
+    QPoint m_center;
+    int m_radius;
 };
 
 #endif // CIRCLE_H

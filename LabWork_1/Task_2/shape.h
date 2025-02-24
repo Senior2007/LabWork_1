@@ -1,22 +1,15 @@
 #ifndef SHAPE_H
 #define SHAPE_H
 
-#include <QWidget>
 #include <QPainter>
+#include <QPoint>
 
-class Shape : public QWidget {
-    Q_OBJECT
-
+class Shape {
 public:
-    explicit Shape(QWidget* parent = nullptr);
+    Shape() noexcept = default;       // Явное объявление с noexcept
     virtual ~Shape() = default;
 
-    virtual void startDrawing(const QPoint& position) = 0;
-    virtual void updateShape(const QPoint& position) = 0;
-    virtual void paint(QPainter& painter) const = 0;
-
-protected:
-    void paintEvent(QPaintEvent* event) override;
+    virtual void draw(QPainter& painter) const = 0;
 };
 
 #endif // SHAPE_H
