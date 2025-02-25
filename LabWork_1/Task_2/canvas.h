@@ -10,12 +10,16 @@ class Circle;
 class Square;
 class Rectangle;
 class Triangle;
+class Rhomb;
+class Hexagon;
+class Stars;
+class Ellipse;
 
 class Canvas : public QWidget {
     Q_OBJECT
 
 public:
-    enum ShapeType { CircleType, SquareType, RectangleType, TriangleType };
+    enum ShapeType { CircleType, SquareType, RectangleType, TriangleType, RhombType, HexagonType, Star5Type, Star6Type, Star8Type, EllipseType };
 
     explicit Canvas(QWidget* parent = nullptr);
     void setShapeType(ShapeType type);

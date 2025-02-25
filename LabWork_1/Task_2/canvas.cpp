@@ -1,8 +1,12 @@
 #include "canvas.h"
 #include "circle.h"
+#include "ellipse.h"
 #include "square.h"
 #include "rectangle.h"
 #include "triangle.h"
+#include "rhomb.h"
+#include "hexagon.h"
+#include "stars.h"
 #include <QPainter>
 #include <QMouseEvent>
 #include <cmath>
@@ -36,6 +40,13 @@ void Canvas::mouseReleaseEvent(QMouseEvent* event) {
                 m_shapes.push_back(std::make_unique<Circle>(m_startPos, radius));
                 break;
             }
+            case EllipseType: {
+                int radiusX = abs(m_currentPos.x() - m_startPos.x());
+                int radiusY = abs(m_currentPos.y() - m_startPos.y());
+                m_shapes.push_back(std::make_unique<Ellipse>(m_startPos, radiusX, radiusY));
+                break;
+            }
+
             case SquareType: {
                 int dx = m_currentPos.x() - m_startPos.x();
                 int dy = m_currentPos.y() - m_startPos.y();
@@ -86,6 +97,40 @@ void Canvas::mouseReleaseEvent(QMouseEvent* event) {
                 m_shapes.push_back(std::make_unique<Triangle>(m_startPos, endPos, midPos));
                 break;
             }
+            case RhombType: {
+                QPoint endPos(m_currentPos.x(), m_currentPos.y());
+                QPoint m_3(m_startPos.x(), 2 * endPos.y() - m_startPos.y());
+                QPoint m_4(2 * m_startPos.x() - endPos.x(), endPos.y());
+                m_shapes.push_back(std::make_unique<Rhomb>(m_startPos, endPos, m_3, m_4));
+                break;
+            }
+            case HexagonType: {
+                int radius = static_cast<int>(sqrt(pow(m_currentPos.x() - m_startPos.x(), 2) + pow(m_currentPos.y() - m_startPos.y(), 2)));
+                m_shapes.push_back(std::make_unique<Hexagon>(m_startPos, radius));
+                break;
+            }
+            case Star5Type: {
+                int outerRadius = static_cast<int>(sqrt(pow(m_currentPos.x() - m_startPos.x(), 2) + pow(m_currentPos.y() - m_startPos.y(), 2)));
+                int innerRadius = outerRadius / 2;
+                int numPoints = 5;
+                m_shapes.push_back(std::make_unique<Stars>(m_startPos, outerRadius, innerRadius, numPoints));
+                break;
+            }
+            case Star6Type: {
+                int outerRadius = static_cast<int>(sqrt(pow(m_currentPos.x() - m_startPos.x(), 2) + pow(m_currentPos.y() - m_startPos.y(), 2)));
+                int innerRadius = outerRadius / 2;
+                int numPoints = 6;
+                m_shapes.push_back(std::make_unique<Stars>(m_startPos, outerRadius, innerRadius, numPoints));
+                break;
+            }
+
+            case Star8Type: {
+                int outerRadius = static_cast<int>(sqrt(pow(m_currentPos.x() - m_startPos.x(), 2) + pow(m_currentPos.y() - m_startPos.y(), 2)));
+                int innerRadius = outerRadius / 2;
+                int numPoints = 8;
+                m_shapes.push_back(std::make_unique<Stars>(m_startPos, outerRadius, innerRadius, numPoints));
+                break;
+            }
         }
         m_isDrawing = false;
         update();
@@ -112,6 +157,12 @@ void Canvas::paintEvent(QPaintEvent* event) {
                 painter.drawEllipse(m_startPos, radius, radius);
                 break;
             }
+            case EllipseType: {
+                int radiusX = abs(m_currentPos.x() - m_startPos.x());
+                int radiusY = abs(m_currentPos.y() - m_startPos.y());
+                painter.drawEllipse(m_startPos, radiusX, radiusY);
+                break;
+            }
             case SquareType: {
                 int dx = m_currentPos.x() - m_startPos.x();
                 int dy = m_currentPos.y() - m_startPos.y();
@@ -131,6 +182,46 @@ void Canvas::paintEvent(QPaintEvent* event) {
                 QPolygon triangle;
                 triangle << m_startPos << endPos << midPos;
                 painter.drawPolygon(triangle);
+                break;
+            }
+            case RhombType: {
+                QPoint endPos(m_currentPos.x(), m_currentPos.y());
+                QPoint m_3(m_startPos.x(), 2 * endPos.y() - m_startPos.y());
+                QPoint m_4(2 * m_startPos.x() - endPos.x(), endPos.y());
+
+                QPolygon rhomb;
+                rhomb << m_startPos << endPos << m_3 << m_4;
+                painter.drawPolygon(rhomb);
+                break;
+            }
+            case HexagonType: {
+                int radius = static_cast<int>(sqrt(pow(m_currentPos.x() - m_startPos.x(), 2) + pow(m_currentPos.y() - m_startPos.y(), 2)));
+                Hexagon previewHexagon(m_startPos, radius);
+                painter.drawPolygon(previewHexagon.calculateVertices());
+                break;
+            }
+            case Star5Type: {
+                int outerRadius = static_cast<int>(sqrt(pow(m_currentPos.x() - m_startPos.x(), 2) + pow(m_currentPos.y() - m_startPos.y(), 2)));
+                int innerRadius = outerRadius / 2;
+                int numPoints = 5;
+                Stars previewStar(m_startPos, outerRadius, innerRadius, numPoints);
+                painter.drawPolygon(previewStar.calculateVertices());
+                break;
+            }
+            case Star6Type: {
+                int outerRadius = static_cast<int>(sqrt(pow(m_currentPos.x() - m_startPos.x(), 2) + pow(m_currentPos.y() - m_startPos.y(), 2)));
+                int innerRadius = outerRadius / 2;
+                int numPoints = 6;
+                Stars previewStar(m_startPos, outerRadius, innerRadius, numPoints);
+                painter.drawPolygon(previewStar.calculateVertices());
+                break;
+            }
+            case Star8Type: {
+                int outerRadius = static_cast<int>(sqrt(pow(m_currentPos.x() - m_startPos.x(), 2) + pow(m_currentPos.y() - m_startPos.y(), 2)));
+                int innerRadius = outerRadius / 2;
+                int numPoints = 8;
+                Stars previewStar(m_startPos, outerRadius, innerRadius, numPoints);
+                painter.drawPolygon(previewStar.calculateVertices());
                 break;
             }
         }

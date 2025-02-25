@@ -54,20 +54,30 @@ OBJECTS_DIR   = ./
 
 SOURCES       = ../../canvas.cpp \
 		../../circle.cpp \
+		../../ellipse.cpp \
+		../../hexagon.cpp \
 		../../main.cpp \
 		../../mainwindow.cpp \
+		../../polygon.cpp \
 		../../rectangle.cpp \
+		../../rhomb.cpp \
 		../../shape.cpp \
 		../../square.cpp \
+		../../stars.cpp \
 		../../triangle.cpp moc_canvas.cpp \
 		moc_mainwindow.cpp
 OBJECTS       = canvas.o \
 		circle.o \
+		ellipse.o \
+		hexagon.o \
 		main.o \
 		mainwindow.o \
+		polygon.o \
 		rectangle.o \
+		rhomb.o \
 		shape.o \
 		square.o \
+		stars.o \
 		triangle.o \
 		moc_canvas.o \
 		moc_mainwindow.o
@@ -437,17 +447,27 @@ DIST          = /opt/homebrew/share/qt/mkspecs/features/spec_pre.prf \
 		/opt/homebrew/share/qt/mkspecs/features/lex.prf \
 		../../../../Task_2.pro ../../canvas.h \
 		../../circle.h \
+		../../ellipse.h \
+		../../hexagon.h \
 		../../mainwindow.h \
+		../../polygon.h \
 		../../rectangle.h \
+		../../rhomb.h \
 		../../shape.h \
 		../../square.h \
+		../../stars.h \
 		../../triangle.h ../../canvas.cpp \
 		../../circle.cpp \
+		../../ellipse.cpp \
+		../../hexagon.cpp \
 		../../main.cpp \
 		../../mainwindow.cpp \
+		../../polygon.cpp \
 		../../rectangle.cpp \
+		../../rhomb.cpp \
 		../../shape.cpp \
 		../../square.cpp \
+		../../stars.cpp \
 		../../triangle.cpp
 QMAKE_TARGET  = Task_2
 DESTDIR       = 
@@ -1235,8 +1255,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /opt/homebrew/share/qt/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../../canvas.h ../../circle.h ../../mainwindow.h ../../rectangle.h ../../shape.h ../../square.h ../../triangle.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../../canvas.cpp ../../circle.cpp ../../main.cpp ../../mainwindow.cpp ../../rectangle.cpp ../../shape.cpp ../../square.cpp ../../triangle.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../../canvas.h ../../circle.h ../../ellipse.h ../../hexagon.h ../../mainwindow.h ../../polygon.h ../../rectangle.h ../../rhomb.h ../../shape.h ../../square.h ../../stars.h ../../triangle.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../../canvas.cpp ../../circle.cpp ../../ellipse.cpp ../../hexagon.cpp ../../main.cpp ../../mainwindow.cpp ../../polygon.cpp ../../rectangle.cpp ../../rhomb.cpp ../../shape.cpp ../../square.cpp ../../stars.cpp ../../triangle.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../../mainwindow.ui $(DISTDIR)/
 
 
@@ -1340,8 +1360,16 @@ canvas.o: ../../canvas.cpp ../../canvas.h \
 		/opt/homebrew/lib/QtCore.framework/Headers/QPoint \
 		/opt/homebrew/lib/QtCore.framework/Headers/qpoint.h \
 		../../circle.h \
+		../../ellipse.h \
 		../../square.h \
+		../../polygon.h \
+		/opt/homebrew/lib/QtCore.framework/Headers/QVector \
+		/opt/homebrew/lib/QtCore.framework/Headers/qvector.h \
 		../../rectangle.h \
+		../../triangle.h \
+		../../rhomb.h \
+		../../hexagon.h \
+		../../stars.h \
 		/opt/homebrew/lib/QtGui.framework/Headers/QMouseEvent \
 		/opt/homebrew/lib/QtGui.framework/Headers/qevent.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o canvas.o ../../canvas.cpp
@@ -1353,6 +1381,25 @@ circle.o: ../../circle.cpp ../../circle.h \
 		/opt/homebrew/lib/QtCore.framework/Headers/QPoint \
 		/opt/homebrew/lib/QtCore.framework/Headers/qpoint.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o circle.o ../../circle.cpp
+
+ellipse.o: ../../ellipse.cpp ../../ellipse.h \
+		../../shape.h \
+		/opt/homebrew/lib/QtGui.framework/Headers/QPainter \
+		/opt/homebrew/lib/QtGui.framework/Headers/qpainter.h \
+		/opt/homebrew/lib/QtCore.framework/Headers/QPoint \
+		/opt/homebrew/lib/QtCore.framework/Headers/qpoint.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ellipse.o ../../ellipse.cpp
+
+hexagon.o: ../../hexagon.cpp ../../hexagon.h \
+		../../polygon.h \
+		../../shape.h \
+		/opt/homebrew/lib/QtGui.framework/Headers/QPainter \
+		/opt/homebrew/lib/QtGui.framework/Headers/qpainter.h \
+		/opt/homebrew/lib/QtCore.framework/Headers/QPoint \
+		/opt/homebrew/lib/QtCore.framework/Headers/qpoint.h \
+		/opt/homebrew/lib/QtCore.framework/Headers/QVector \
+		/opt/homebrew/lib/QtCore.framework/Headers/qvector.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o hexagon.o ../../hexagon.cpp
 
 main.o: ../../main.cpp /opt/homebrew/lib/QtWidgets.framework/Headers/QApplication \
 		/opt/homebrew/lib/QtWidgets.framework/Headers/qapplication.h \
@@ -1401,31 +1448,72 @@ mainwindow.o: ../../mainwindow.cpp ../../mainwindow.h \
 		/opt/homebrew/lib/QtWidgets.framework/Headers/qframe.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../../mainwindow.cpp
 
-rectangle.o: ../../rectangle.cpp ../../rectangle.h \
+polygon.o: ../../polygon.cpp ../../polygon.h \
 		../../shape.h \
 		/opt/homebrew/lib/QtGui.framework/Headers/QPainter \
 		/opt/homebrew/lib/QtGui.framework/Headers/qpainter.h \
 		/opt/homebrew/lib/QtCore.framework/Headers/QPoint \
-		/opt/homebrew/lib/QtCore.framework/Headers/qpoint.h
+		/opt/homebrew/lib/QtCore.framework/Headers/qpoint.h \
+		/opt/homebrew/lib/QtCore.framework/Headers/QVector \
+		/opt/homebrew/lib/QtCore.framework/Headers/qvector.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o polygon.o ../../polygon.cpp
+
+rectangle.o: ../../rectangle.cpp ../../rectangle.h \
+		../../polygon.h \
+		../../shape.h \
+		/opt/homebrew/lib/QtGui.framework/Headers/QPainter \
+		/opt/homebrew/lib/QtGui.framework/Headers/qpainter.h \
+		/opt/homebrew/lib/QtCore.framework/Headers/QPoint \
+		/opt/homebrew/lib/QtCore.framework/Headers/qpoint.h \
+		/opt/homebrew/lib/QtCore.framework/Headers/QVector \
+		/opt/homebrew/lib/QtCore.framework/Headers/qvector.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o rectangle.o ../../rectangle.cpp
+
+rhomb.o: ../../rhomb.cpp ../../rhomb.h \
+		../../polygon.h \
+		../../shape.h \
+		/opt/homebrew/lib/QtGui.framework/Headers/QPainter \
+		/opt/homebrew/lib/QtGui.framework/Headers/qpainter.h \
+		/opt/homebrew/lib/QtCore.framework/Headers/QPoint \
+		/opt/homebrew/lib/QtCore.framework/Headers/qpoint.h \
+		/opt/homebrew/lib/QtCore.framework/Headers/QVector \
+		/opt/homebrew/lib/QtCore.framework/Headers/qvector.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o rhomb.o ../../rhomb.cpp
 
 shape.o: ../../shape.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o shape.o ../../shape.cpp
 
 square.o: ../../square.cpp ../../square.h \
+		../../polygon.h \
 		../../shape.h \
 		/opt/homebrew/lib/QtGui.framework/Headers/QPainter \
 		/opt/homebrew/lib/QtGui.framework/Headers/qpainter.h \
 		/opt/homebrew/lib/QtCore.framework/Headers/QPoint \
-		/opt/homebrew/lib/QtCore.framework/Headers/qpoint.h
+		/opt/homebrew/lib/QtCore.framework/Headers/qpoint.h \
+		/opt/homebrew/lib/QtCore.framework/Headers/QVector \
+		/opt/homebrew/lib/QtCore.framework/Headers/qvector.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o square.o ../../square.cpp
 
-triangle.o: ../../triangle.cpp ../../triangle.h \
+stars.o: ../../stars.cpp ../../stars.h \
+		../../polygon.h \
 		../../shape.h \
 		/opt/homebrew/lib/QtGui.framework/Headers/QPainter \
 		/opt/homebrew/lib/QtGui.framework/Headers/qpainter.h \
 		/opt/homebrew/lib/QtCore.framework/Headers/QPoint \
-		/opt/homebrew/lib/QtCore.framework/Headers/qpoint.h
+		/opt/homebrew/lib/QtCore.framework/Headers/qpoint.h \
+		/opt/homebrew/lib/QtCore.framework/Headers/QVector \
+		/opt/homebrew/lib/QtCore.framework/Headers/qvector.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o stars.o ../../stars.cpp
+
+triangle.o: ../../triangle.cpp ../../triangle.h \
+		../../polygon.h \
+		../../shape.h \
+		/opt/homebrew/lib/QtGui.framework/Headers/QPainter \
+		/opt/homebrew/lib/QtGui.framework/Headers/qpainter.h \
+		/opt/homebrew/lib/QtCore.framework/Headers/QPoint \
+		/opt/homebrew/lib/QtCore.framework/Headers/qpoint.h \
+		/opt/homebrew/lib/QtCore.framework/Headers/QVector \
+		/opt/homebrew/lib/QtCore.framework/Headers/qvector.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o triangle.o ../../triangle.cpp
 
 moc_canvas.o: moc_canvas.cpp 

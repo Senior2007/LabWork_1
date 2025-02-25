@@ -1,10 +1,10 @@
 #ifndef TRIANGLE_H
 #define TRIANGLE_H
 
-#include "shape.h"
+#include "polygon.h"
 #include <QPoint>
 
-class Triangle : public Shape {
+class Triangle : public Polygon {
 public:
     Triangle(const QPoint& start, const QPoint& end, const QPoint& middle);
     void draw(QPainter& painter) const override;

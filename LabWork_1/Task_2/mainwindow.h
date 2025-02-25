@@ -15,9 +15,15 @@ public:
 
 private slots:
     void selectCircle();
+    void selectEllipse();
     void selectSquare();
     void selectRectangle();
     void selectTriangle();
+    void selectRhomb();
+    void selectHexagon();
+    void selectStar5();
+    void selectStar6();
+    void selectStar8();
     void clearShapes();
 private:
     Canvas* m_canvas;

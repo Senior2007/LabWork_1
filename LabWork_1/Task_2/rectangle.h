@@ -1,10 +1,10 @@
 #ifndef RECTANGLE_H
 #define RECTANGLE_H
 
-#include "shape.h"
+#include "polygon.h"
 #include <QPoint>
 
-class Rectangle : public Shape {
+class Rectangle : public Polygon {
 public:
     Rectangle(const QPoint& start, const QPoint& end);
     void draw(QPainter& painter) const override;

@@ -6,7 +6,7 @@
 
 class Shape {
 public:
-    Shape() noexcept = default;       // Явное объявление с noexcept
+    Shape() noexcept = default;
     virtual ~Shape() = default;
 
     virtual void draw(QPainter& painter) const = 0;

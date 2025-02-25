@@ -19,13 +19,25 @@ MainWindow::MainWindow(QWidget* parent)
     m_btnMenu->setPopupMode(QToolButton::InstantPopup);
 
     QAction* actionCircle = new QAction("Круг", this);
+    QAction* actionEllipse = new QAction("Эллипс", this);
     QAction* actionSquare = new QAction("Квадрат", this);
     QAction* actionRectangle = new QAction("Прямоугольник", this);
     QAction* actionTriangle = new QAction("Треугольник", this);
+    QAction* actionRhomb = new QAction("Ромб", this);
+    QAction* actionHexagon = new QAction("Шестиугольник", this);
+    QAction* actionStar5 = new QAction("Пятиконечная звезда", this);
+    QAction* actionStar6 = new QAction("Шестиконечная звезда", this);
+    QAction* actionStar8 = new QAction("Восьмиконечная звезда", this);
     m_shapeMenu->addAction(actionCircle);
+    m_shapeMenu->addAction(actionEllipse);
     m_shapeMenu->addAction(actionSquare);
     m_shapeMenu->addAction(actionRectangle);
     m_shapeMenu->addAction(actionTriangle);
+    m_shapeMenu->addAction(actionRhomb);
+    m_shapeMenu->addAction(actionHexagon);
+    m_shapeMenu->addAction(actionStar5);
+    m_shapeMenu->addAction(actionStar6);
+    m_shapeMenu->addAction(actionStar8);
     m_btnMenu->setMenu(m_shapeMenu);
 
     m_btnClear->setFixedSize(100, 35);
@@ -51,15 +63,26 @@ MainWindow::MainWindow(QWidget* parent)
 
     // Сигналы и слоты
     connect(actionCircle, &QAction::triggered, this, &MainWindow::selectCircle);
+    connect(actionEllipse, &QAction::triggered, this, &MainWindow::selectEllipse);
     connect(actionSquare, &QAction::triggered, this, &MainWindow::selectSquare);
     connect(actionRectangle, &QAction::triggered, this, &MainWindow::selectRectangle);
     connect(actionTriangle, &QAction::triggered, this, &MainWindow::selectTriangle);
+    connect(actionRhomb, &QAction::triggered, this, &MainWindow::selectRhomb);
+    connect(actionHexagon, &QAction::triggered, this, &MainWindow::selectHexagon);
+    connect(actionStar5, &QAction::triggered, this, &MainWindow::selectStar5);
+    connect(actionStar6, &QAction::triggered, this, &MainWindow::selectStar6);
+    connect(actionStar8, &QAction::triggered, this, &MainWindow::selectStar8);
     connect(m_btnClear, &QPushButton::clicked, this, &MainWindow::clearShapes);
 }
 
 void MainWindow::selectCircle() {
     m_canvas->setShapeType(Canvas::CircleType);
     m_btnMenu->setText("Круг");
+}
+
+void MainWindow::selectEllipse() {
+    m_canvas->setShapeType(Canvas::EllipseType);
+    m_btnMenu->setText("Эллипс");
 }
 
 void MainWindow::selectSquare() {
@@ -77,6 +100,30 @@ void MainWindow::selectTriangle() {
     m_btnMenu->setText("Треугольник");
 }
 
+void MainWindow::selectRhomb() {
+    m_canvas->setShapeType(Canvas::RhombType);
+    m_btnMenu->setText("Ромб");
+}
+
+void MainWindow::selectHexagon() {
+    m_canvas->setShapeType(Canvas::HexagonType);
+    m_btnMenu->setText("Шестиугольник");
+}
+
+void MainWindow::selectStar5() {
+    m_canvas->setShapeType(Canvas::Star5Type);
+    m_btnMenu->setText("Пятиконечная звезда");
+}
+
+void MainWindow::selectStar6() {
+    m_canvas->setShapeType(Canvas::Star6Type);
+    m_btnMenu->setText("Шестиконечная звезда");
+}
+
+void MainWindow::selectStar8() {
+    m_canvas->setShapeType(Canvas::Star8Type);
+    m_btnMenu->setText("Восьмиконечная звезда");
+}
 
 void MainWindow::clearShapes() {
     m_canvas->clear_shapes();

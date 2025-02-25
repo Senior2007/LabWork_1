@@ -1,5 +1,4 @@
 #include <rectangle.h>
-#include <algorithm>
 #include <QPainter>
 
 Rectangle::Rectangle(const QPoint& start, const QPoint& end)
