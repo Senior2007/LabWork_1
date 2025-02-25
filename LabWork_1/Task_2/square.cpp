@@ -8,7 +8,8 @@ Square::Square(const QPoint& start, const QPoint& end)
 void Square::draw(QPainter& painter) const {
     painter.setPen(Qt::black);
     painter.setBrush(Qt::green);
-    //изменить реализацию, чтобы взависимости от стартовой и конечной точки рисовалось в разных координатах
-    int size = std::max(m_end.x() - m_start.x(), m_end.y() - m_start.y());
+
+    int lx = m_start.x(), ly = m_start.y(), rx = m_end.x(), ry = m_end.y();
+    int size = std::max(abs(rx - lx), abs(ry - ly));
     painter.drawRect(m_start.x(), m_start.y(), size, size);
 }

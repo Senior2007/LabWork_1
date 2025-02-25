@@ -56,15 +56,19 @@ SOURCES       = ../../canvas.cpp \
 		../../circle.cpp \
 		../../main.cpp \
 		../../mainwindow.cpp \
+		../../rectangle.cpp \
 		../../shape.cpp \
-		../../square.cpp moc_canvas.cpp \
+		../../square.cpp \
+		../../triangle.cpp moc_canvas.cpp \
 		moc_mainwindow.cpp
 OBJECTS       = canvas.o \
 		circle.o \
 		main.o \
 		mainwindow.o \
+		rectangle.o \
 		shape.o \
 		square.o \
+		triangle.o \
 		moc_canvas.o \
 		moc_mainwindow.o
 DIST          = /opt/homebrew/share/qt/mkspecs/features/spec_pre.prf \
@@ -434,13 +438,17 @@ DIST          = /opt/homebrew/share/qt/mkspecs/features/spec_pre.prf \
 		../../../../Task_2.pro ../../canvas.h \
 		../../circle.h \
 		../../mainwindow.h \
+		../../rectangle.h \
 		../../shape.h \
-		../../square.h ../../canvas.cpp \
+		../../square.h \
+		../../triangle.h ../../canvas.cpp \
 		../../circle.cpp \
 		../../main.cpp \
 		../../mainwindow.cpp \
+		../../rectangle.cpp \
 		../../shape.cpp \
-		../../square.cpp
+		../../square.cpp \
+		../../triangle.cpp
 QMAKE_TARGET  = Task_2
 DESTDIR       = 
 TARGET        = Task_2.app/Contents/MacOS/Task_2
@@ -1227,8 +1235,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /opt/homebrew/share/qt/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../../canvas.h ../../circle.h ../../mainwindow.h ../../shape.h ../../square.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../../canvas.cpp ../../circle.cpp ../../main.cpp ../../mainwindow.cpp ../../shape.cpp ../../square.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../../canvas.h ../../circle.h ../../mainwindow.h ../../rectangle.h ../../shape.h ../../square.h ../../triangle.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../../canvas.cpp ../../circle.cpp ../../main.cpp ../../mainwindow.cpp ../../rectangle.cpp ../../shape.cpp ../../square.cpp ../../triangle.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../../mainwindow.ui $(DISTDIR)/
 
 
@@ -1275,7 +1283,6 @@ moc_canvas.cpp: ../../canvas.h \
 		/opt/homebrew/lib/QtGui.framework/Headers/qpainter.h \
 		/opt/homebrew/lib/QtCore.framework/Headers/QPoint \
 		/opt/homebrew/lib/QtCore.framework/Headers/qpoint.h \
-		../../circle.h \
 		moc_predefs.h \
 		/opt/homebrew/share/qt/libexec/moc
 	/opt/homebrew/share/qt/libexec/moc $(DEFINES) --include /Users/senior/Desktop/BSUIR/ОАиП/QT/LabWork_1/Task_2/build/Desktop_arm_darwin_generic_mach_o_64bit-Debug/moc_predefs.h -I/opt/homebrew/share/qt/mkspecs/macx-clang -I/Users/senior/Desktop/BSUIR/ОАиП/QT/LabWork_1/Task_2 -I/opt/homebrew/lib/QtWidgets.framework/Headers -I/opt/homebrew/lib/QtGui.framework/Headers -I/opt/homebrew/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/16/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/usr/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -F/opt/homebrew/lib ../../canvas.h -o moc_canvas.cpp
@@ -1283,6 +1290,12 @@ moc_canvas.cpp: ../../canvas.h \
 moc_mainwindow.cpp: ../../mainwindow.h \
 		/opt/homebrew/lib/QtWidgets.framework/Headers/QMainWindow \
 		/opt/homebrew/lib/QtWidgets.framework/Headers/qmainwindow.h \
+		/opt/homebrew/lib/QtWidgets.framework/Headers/QToolButton \
+		/opt/homebrew/lib/QtWidgets.framework/Headers/qtoolbutton.h \
+		/opt/homebrew/lib/QtWidgets.framework/Headers/QMenu \
+		/opt/homebrew/lib/QtWidgets.framework/Headers/qmenu.h \
+		/opt/homebrew/lib/QtWidgets.framework/Headers/QPushButton \
+		/opt/homebrew/lib/QtWidgets.framework/Headers/qpushbutton.h \
 		../../canvas.h \
 		/opt/homebrew/lib/QtWidgets.framework/Headers/QWidget \
 		/opt/homebrew/lib/QtWidgets.framework/Headers/qwidget.h \
@@ -1291,7 +1304,6 @@ moc_mainwindow.cpp: ../../mainwindow.h \
 		/opt/homebrew/lib/QtGui.framework/Headers/qpainter.h \
 		/opt/homebrew/lib/QtCore.framework/Headers/QPoint \
 		/opt/homebrew/lib/QtCore.framework/Headers/qpoint.h \
-		../../circle.h \
 		moc_predefs.h \
 		/opt/homebrew/share/qt/libexec/moc
 	/opt/homebrew/share/qt/libexec/moc $(DEFINES) --include /Users/senior/Desktop/BSUIR/ОАиП/QT/LabWork_1/Task_2/build/Desktop_arm_darwin_generic_mach_o_64bit-Debug/moc_predefs.h -I/opt/homebrew/share/qt/mkspecs/macx-clang -I/Users/senior/Desktop/BSUIR/ОАиП/QT/LabWork_1/Task_2 -I/opt/homebrew/lib/QtWidgets.framework/Headers -I/opt/homebrew/lib/QtGui.framework/Headers -I/opt/homebrew/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/16/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/usr/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -F/opt/homebrew/lib ../../mainwindow.h -o moc_mainwindow.cpp
@@ -1328,6 +1340,8 @@ canvas.o: ../../canvas.cpp ../../canvas.h \
 		/opt/homebrew/lib/QtCore.framework/Headers/QPoint \
 		/opt/homebrew/lib/QtCore.framework/Headers/qpoint.h \
 		../../circle.h \
+		../../square.h \
+		../../rectangle.h \
 		/opt/homebrew/lib/QtGui.framework/Headers/QMouseEvent \
 		/opt/homebrew/lib/QtGui.framework/Headers/qevent.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o canvas.o ../../canvas.cpp
@@ -1345,6 +1359,12 @@ main.o: ../../main.cpp /opt/homebrew/lib/QtWidgets.framework/Headers/QApplicatio
 		../../mainwindow.h \
 		/opt/homebrew/lib/QtWidgets.framework/Headers/QMainWindow \
 		/opt/homebrew/lib/QtWidgets.framework/Headers/qmainwindow.h \
+		/opt/homebrew/lib/QtWidgets.framework/Headers/QToolButton \
+		/opt/homebrew/lib/QtWidgets.framework/Headers/qtoolbutton.h \
+		/opt/homebrew/lib/QtWidgets.framework/Headers/QMenu \
+		/opt/homebrew/lib/QtWidgets.framework/Headers/qmenu.h \
+		/opt/homebrew/lib/QtWidgets.framework/Headers/QPushButton \
+		/opt/homebrew/lib/QtWidgets.framework/Headers/qpushbutton.h \
 		../../canvas.h \
 		/opt/homebrew/lib/QtWidgets.framework/Headers/QWidget \
 		/opt/homebrew/lib/QtWidgets.framework/Headers/qwidget.h \
@@ -1352,13 +1372,18 @@ main.o: ../../main.cpp /opt/homebrew/lib/QtWidgets.framework/Headers/QApplicatio
 		/opt/homebrew/lib/QtGui.framework/Headers/QPainter \
 		/opt/homebrew/lib/QtGui.framework/Headers/qpainter.h \
 		/opt/homebrew/lib/QtCore.framework/Headers/QPoint \
-		/opt/homebrew/lib/QtCore.framework/Headers/qpoint.h \
-		../../circle.h
+		/opt/homebrew/lib/QtCore.framework/Headers/qpoint.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../../main.cpp
 
 mainwindow.o: ../../mainwindow.cpp ../../mainwindow.h \
 		/opt/homebrew/lib/QtWidgets.framework/Headers/QMainWindow \
 		/opt/homebrew/lib/QtWidgets.framework/Headers/qmainwindow.h \
+		/opt/homebrew/lib/QtWidgets.framework/Headers/QToolButton \
+		/opt/homebrew/lib/QtWidgets.framework/Headers/qtoolbutton.h \
+		/opt/homebrew/lib/QtWidgets.framework/Headers/QMenu \
+		/opt/homebrew/lib/QtWidgets.framework/Headers/qmenu.h \
+		/opt/homebrew/lib/QtWidgets.framework/Headers/QPushButton \
+		/opt/homebrew/lib/QtWidgets.framework/Headers/qpushbutton.h \
 		../../canvas.h \
 		/opt/homebrew/lib/QtWidgets.framework/Headers/QWidget \
 		/opt/homebrew/lib/QtWidgets.framework/Headers/qwidget.h \
@@ -1367,8 +1392,22 @@ mainwindow.o: ../../mainwindow.cpp ../../mainwindow.h \
 		/opt/homebrew/lib/QtGui.framework/Headers/qpainter.h \
 		/opt/homebrew/lib/QtCore.framework/Headers/QPoint \
 		/opt/homebrew/lib/QtCore.framework/Headers/qpoint.h \
-		../../circle.h
+		/opt/homebrew/lib/QtWidgets.framework/Headers/QHBoxLayout \
+		/opt/homebrew/lib/QtWidgets.framework/Headers/qboxlayout.h \
+		/opt/homebrew/lib/QtWidgets.framework/Headers/QVBoxLayout \
+		/opt/homebrew/lib/QtGui.framework/Headers/QAction \
+		/opt/homebrew/lib/QtGui.framework/Headers/qaction.h \
+		/opt/homebrew/lib/QtWidgets.framework/Headers/QFrame \
+		/opt/homebrew/lib/QtWidgets.framework/Headers/qframe.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../../mainwindow.cpp
+
+rectangle.o: ../../rectangle.cpp ../../rectangle.h \
+		../../shape.h \
+		/opt/homebrew/lib/QtGui.framework/Headers/QPainter \
+		/opt/homebrew/lib/QtGui.framework/Headers/qpainter.h \
+		/opt/homebrew/lib/QtCore.framework/Headers/QPoint \
+		/opt/homebrew/lib/QtCore.framework/Headers/qpoint.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o rectangle.o ../../rectangle.cpp
 
 shape.o: ../../shape.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o shape.o ../../shape.cpp
@@ -1380,6 +1419,14 @@ square.o: ../../square.cpp ../../square.h \
 		/opt/homebrew/lib/QtCore.framework/Headers/QPoint \
 		/opt/homebrew/lib/QtCore.framework/Headers/qpoint.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o square.o ../../square.cpp
+
+triangle.o: ../../triangle.cpp ../../triangle.h \
+		../../shape.h \
+		/opt/homebrew/lib/QtGui.framework/Headers/QPainter \
+		/opt/homebrew/lib/QtGui.framework/Headers/qpainter.h \
+		/opt/homebrew/lib/QtCore.framework/Headers/QPoint \
+		/opt/homebrew/lib/QtCore.framework/Headers/qpoint.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o triangle.o ../../triangle.cpp
 
 moc_canvas.o: moc_canvas.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_canvas.o moc_canvas.cpp

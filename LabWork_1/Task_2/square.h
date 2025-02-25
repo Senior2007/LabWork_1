@@ -10,8 +10,8 @@ public:
     void draw(QPainter& painter) const override;
 
 private:
-    QPoint m_start; // Левый верхний угол
-    QPoint m_end;   // Правый нижний угол
+    QPoint m_start;
+    QPoint m_end;
 };
 
 #endif // SQUARE_H

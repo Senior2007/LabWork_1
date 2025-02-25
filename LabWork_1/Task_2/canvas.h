@@ -8,15 +8,18 @@
 
 class Circle;
 class Square;
+class Rectangle;
+class Triangle;
 
 class Canvas : public QWidget {
     Q_OBJECT
 
 public:
-    enum ShapeType { CircleType, SquareType };
+    enum ShapeType { CircleType, SquareType, RectangleType, TriangleType };
 
     explicit Canvas(QWidget* parent = nullptr);
     void setShapeType(ShapeType type);
+    void clear_shapes();
 
 protected:
     void mousePressEvent(QMouseEvent* event) override;

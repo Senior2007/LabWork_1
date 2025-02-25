@@ -13,15 +13,19 @@ SOURCES += \
     circle.cpp \
     main.cpp \
     mainwindow.cpp \
+    rectangle.cpp \
     shape.cpp \
-    square.cpp
+    square.cpp \
+    triangle.cpp
 
 HEADERS += \
     canvas.h \
     circle.h \
     mainwindow.h \
+    rectangle.h \
     shape.h \
-    square.h
+    square.h \
+    triangle.h
 
 FORMS += \
     mainwindow.ui
