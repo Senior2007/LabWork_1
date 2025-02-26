@@ -2,13 +2,26 @@
 #include <QPainter>
 #include <cmath>
 
-Stars::Stars(const QPoint& center, int outerRadius, int innerRadius, int numPoints)
-    : m_center(center), m_outerRadius(outerRadius), m_innerRadius(innerRadius), m_numPoints(numPoints) {}
+Stars::Stars(const QPoint& center, int outerRadius, int innerRadius, int numPoints) : m_center(center), m_outerRadius(outerRadius), m_innerRadius(innerRadius), m_numPoints(numPoints) {
+    vertices = calculateVertices();
+}
 
-void Stars::draw(QPainter& painter) const {
-    painter.setPen(Qt::black);
+void Stars::draw(QPainter& painter, const Shape* selectedShape) const {
+    bool pr = false;
+    if (selectedShape == this) {
+        painter.setPen(Qt::green);
+        pr = true;
+    } else {
+        painter.setPen(Qt::black);
+    }
+
     painter.setBrush(Qt::cyan);
     painter.drawPolygon(calculateVertices());
+
+    if (pr) {
+        painter.setBrush(Qt::black);
+        painter.drawEllipse(m_center, 3, 3);
+    }
 }
 
 QVector<QPoint> Stars::calculateVertices() const {

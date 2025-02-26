@@ -8,7 +8,7 @@
 class Hexagon : public Polygon {
 public:
     Hexagon(const QPoint& center, int radius);
-    void draw(QPainter& painter) const override;
+    void draw(QPainter& painter, const Shape* selectedShape) const override;
     QVector<QPoint> calculateVertices() const;
 
 private:

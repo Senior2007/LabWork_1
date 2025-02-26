@@ -20,10 +20,10 @@ class Canvas : public QWidget {
 
 public:
     enum ShapeType { CircleType, SquareType, RectangleType, TriangleType, RhombType, HexagonType, Star5Type, Star6Type, Star8Type, EllipseType };
-
     explicit Canvas(QWidget* parent = nullptr);
     void setShapeType(ShapeType type);
     void clear_shapes();
+    Shape* m_selectedShape = nullptr;
 
 protected:
     void mousePressEvent(QMouseEvent* event) override;
@@ -37,6 +37,7 @@ private:
     QPoint m_startPos;
     QPoint m_currentPos;
     bool m_isDrawing = false;
+    Shape* findShapeAt(const QPoint& point) const;
 };
 
 #endif // CANVAS_H

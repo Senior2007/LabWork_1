@@ -2,13 +2,27 @@
 #include <QPainter>
 #include <cmath>
 
-Hexagon::Hexagon(const QPoint& center, int radius)
-    : m_center(center), m_radius(radius) {}
+Hexagon::Hexagon(const QPoint& center, int radius) : m_center(center), m_radius(radius) {
+    vertices = calculateVertices();
+}
 
-void Hexagon::draw(QPainter& painter) const {
-    painter.setPen(Qt::black);
+void Hexagon::draw(QPainter& painter, const Shape* selectedShape) const {
+
+    bool pr = false;
+    if (selectedShape == this && m_radius != 0) {
+        painter.setPen(Qt::green);
+        pr = true;
+    } else {
+        painter.setPen(Qt::black);
+    }
+
     painter.setBrush(Qt::white);
     painter.drawPolygon(calculateVertices());
+
+    if (pr) {
+        painter.setBrush(Qt::black);
+        painter.drawEllipse(m_center, 3, 3);
+    }
 }
 
 QVector<QPoint> Hexagon::calculateVertices() const {

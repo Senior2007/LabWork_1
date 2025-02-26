@@ -8,8 +8,8 @@
 class Polygon : public Shape {
 public:
     Polygon();
-    void draw(QPainter& painter) const override;
-
+    void draw(QPainter& painter, const Shape* selectedShape) const override;
+    bool contains(const QPoint& point) const override;
 protected:
     QVector<QPoint> vertices;
 };

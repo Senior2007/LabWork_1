@@ -17,11 +17,22 @@ void Canvas::setShapeType(ShapeType type) {
     m_currentShapeType = type;
 }
 
+Shape* Canvas::findShapeAt(const QPoint& point) const {
+    for (auto it = m_shapes.rbegin(); it != m_shapes.rend(); ++it) {
+        if ((*it)->contains(point)) {
+            return it->get();
+        }
+    }
+    return nullptr;
+}
+
 void Canvas::mousePressEvent(QMouseEvent* event) {
     if (event->button() == Qt::LeftButton) {
         m_startPos = event->pos();
         m_currentPos = event->pos();
         m_isDrawing = true;
+        m_selectedShape = findShapeAt(event->pos());
+        update();
     }
 }
 
@@ -143,7 +154,7 @@ void Canvas::paintEvent(QPaintEvent* event) {
     painter.setRenderHint(QPainter::Antialiasing);
 
     for (const auto& shape : m_shapes) {
-        shape->draw(painter);
+        shape->draw(painter, m_selectedShape);
     }
 
     // Draw preview

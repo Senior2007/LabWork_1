@@ -8,7 +8,7 @@
 class Stars : public Polygon {
 public:
     Stars(const QPoint& center, int outerRadius, int innerRadius, int numPoints);
-    void draw(QPainter& painter) const override;
+    void draw(QPainter& painter, const Shape* selectedShape) const override;
     QVector<QPoint> calculateVertices() const;
 
 private:
