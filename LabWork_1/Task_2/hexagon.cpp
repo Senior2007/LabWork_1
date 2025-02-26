@@ -38,3 +38,10 @@ QVector<QPoint> Hexagon::calculateVertices() const {
 
     return vertices;
 }
+
+void Hexagon::updatePos(QPoint diff) {
+    for (int i = 0; i < vertices.size(); i++) {
+        vertices[i] += diff;
+    }
+    m_center += diff;
+}

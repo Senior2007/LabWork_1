@@ -26,3 +26,14 @@ void Rhomb::draw(QPainter& painter, const Shape* selectedShape) const {
         painter.drawEllipse(m_center, 3, 3);
     }
 }
+
+void Rhomb::updatePos(QPoint diff) {
+    for (int i = 0; i < vertices.size(); i++) {
+        vertices[i] += diff;
+    }
+    m_start += diff;
+    m_end += diff;
+    m_3 += diff;
+    m_4 += diff;
+    m_center += diff;
+}

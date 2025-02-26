@@ -10,6 +10,7 @@ public:
     Stars(const QPoint& center, int outerRadius, int innerRadius, int numPoints);
     void draw(QPainter& painter, const Shape* selectedShape) const override;
     QVector<QPoint> calculateVertices() const;
+    void updatePos(QPoint diff) override;
 
 private:
     QPoint m_center;

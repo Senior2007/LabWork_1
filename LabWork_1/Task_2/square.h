@@ -8,6 +8,7 @@ class Square : public Polygon {
 public:
     Square(const QPoint& start, const QPoint& end);
     void draw(QPainter& painter, const Shape* selectedShape) const override;
+    void updatePos(QPoint diff) override;
 
 private:
     QPoint m_start;

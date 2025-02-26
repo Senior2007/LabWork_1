@@ -24,6 +24,7 @@ private slots:
     void selectStar5();
     void selectStar6();
     void selectStar8();
+    void selectMoving();
     void clearShapes();
 private:
     Canvas* m_canvas;

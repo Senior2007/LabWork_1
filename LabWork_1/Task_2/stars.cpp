@@ -44,3 +44,10 @@ QVector<QPoint> Stars::calculateVertices() const {
 
     return vertices;
 }
+
+void Stars::updatePos(QPoint diff) {
+    for (int i = 0; i < vertices.size(); i++) {
+        vertices[i] += diff;
+    }
+    m_center += diff;
+}

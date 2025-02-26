@@ -23,6 +23,14 @@ void Square::draw(QPainter& painter, const Shape* selectedShape) const {
 
     if (pr) {
         painter.setBrush(Qt::black);
-        painter.drawEllipse(m_start.x() + size / 2, m_start.y() + size / 2, 4, 4);
+        painter.drawEllipse(QPoint(m_start.x() + size / 2, m_start.y() + size / 2), 3, 3);
     }
+}
+
+void Square::updatePos(QPoint diff) {
+    for (int i = 0; i < vertices.size(); i++) {
+        vertices[i] += diff;
+    }
+    m_start += diff;
+    m_end += diff;
 }

@@ -10,6 +10,8 @@ public:
     Polygon();
     void draw(QPainter& painter, const Shape* selectedShape) const override;
     bool contains(const QPoint& point) const override;
+    void updatePos(QPoint diff) override;
+
 protected:
     QVector<QPoint> vertices;
 };

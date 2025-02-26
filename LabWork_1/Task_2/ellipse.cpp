@@ -29,3 +29,7 @@ bool Ellipse::contains(const QPoint& point) const {
 
     return ((dx * dx) / (m_radiusX * m_radiusX) + (dy * dy) / (m_radiusY * m_radiusY)) <= 1.0;
 }
+
+void Ellipse::updatePos(QPoint diff) {
+    m_center += diff;
+}

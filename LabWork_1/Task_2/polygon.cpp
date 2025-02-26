@@ -14,3 +14,7 @@ bool Polygon::contains(const QPoint& point) const {
 
     return polygon.containsPoint(point, Qt::OddEvenFill);
 }
+
+void Polygon::updatePos(QPoint diff) {
+
+}

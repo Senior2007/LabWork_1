@@ -10,6 +10,7 @@ public:
     virtual ~Shape() = default;
     virtual void draw(QPainter& painter, const Shape* selectedShape) const = 0;
     virtual bool contains(const QPoint& point) const = 0;
+    virtual void updatePos(QPoint diff) = 0;
 };
 
 #endif // SHAPE_H

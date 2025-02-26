@@ -9,6 +9,7 @@ public:
     Ellipse(const QPoint& center, int radiusX, int radiusY);
     void draw(QPainter& painter, const Shape* selectedShape) const override;
     bool contains(const QPoint& point) const override;
+    void updatePos(QPoint diff) override;
 
 private:
     QPoint m_center;

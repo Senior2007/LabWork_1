@@ -10,6 +10,7 @@ public:
     Hexagon(const QPoint& center, int radius);
     void draw(QPainter& painter, const Shape* selectedShape) const override;
     QVector<QPoint> calculateVertices() const;
+    void updatePos(QPoint diff) override;
 
 private:
     QPoint m_center;

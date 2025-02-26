@@ -11,7 +11,10 @@
 #include <QMouseEvent>
 #include <cmath>
 
-Canvas::Canvas(QWidget* parent) : QWidget(parent) {}
+Canvas::Canvas(QWidget* parent) : QWidget(parent) {
+    setFocusPolicy(Qt::StrongFocus);
+    setFocus();
+}
 
 void Canvas::setShapeType(ShapeType type) {
     m_currentShapeType = type;
@@ -37,6 +40,11 @@ void Canvas::mousePressEvent(QMouseEvent* event) {
 }
 
 void Canvas::mouseMoveEvent(QMouseEvent* event) {
+    if (m_currentShapeType == MovingType && m_selectedShape) {
+        QPoint mouve = event->pos() - m_currentPos;
+        m_selectedShape->updatePos(mouve);
+    }
+
     if (m_isDrawing) {
         m_currentPos = event->pos();
         update();

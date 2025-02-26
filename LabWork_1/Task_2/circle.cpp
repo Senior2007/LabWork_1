@@ -27,3 +27,7 @@ bool Circle::contains(const QPoint& point) const {
     int dy = point.y() - m_center.y();
     return (dx * dx + dy * dy) <= (m_radius * m_radius);
 }
+
+void Circle::updatePos(QPoint diff) {
+    m_center += diff;
+}

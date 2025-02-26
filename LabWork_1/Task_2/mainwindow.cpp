@@ -28,6 +28,7 @@ MainWindow::MainWindow(QWidget* parent)
     QAction* actionStar5 = new QAction("Пятиконечная звезда", this);
     QAction* actionStar6 = new QAction("Шестиконечная звезда", this);
     QAction* actionStar8 = new QAction("Восьмиконечная звезда", this);
+    QAction* actionMoving = new QAction("Перемещение", this);
     m_shapeMenu->addAction(actionCircle);
     m_shapeMenu->addAction(actionEllipse);
     m_shapeMenu->addAction(actionSquare);
@@ -38,6 +39,7 @@ MainWindow::MainWindow(QWidget* parent)
     m_shapeMenu->addAction(actionStar5);
     m_shapeMenu->addAction(actionStar6);
     m_shapeMenu->addAction(actionStar8);
+    m_shapeMenu->addAction(actionMoving);
     m_btnMenu->setMenu(m_shapeMenu);
 
     m_btnClear->setFixedSize(100, 35);
@@ -72,6 +74,7 @@ MainWindow::MainWindow(QWidget* parent)
     connect(actionStar5, &QAction::triggered, this, &MainWindow::selectStar5);
     connect(actionStar6, &QAction::triggered, this, &MainWindow::selectStar6);
     connect(actionStar8, &QAction::triggered, this, &MainWindow::selectStar8);
+    connect(actionMoving, &QAction::triggered, this, &MainWindow::selectMoving);
     connect(m_btnClear, &QPushButton::clicked, this, &MainWindow::clearShapes);
 }
 
@@ -123,6 +126,11 @@ void MainWindow::selectStar6() {
 void MainWindow::selectStar8() {
     m_canvas->setShapeType(Canvas::Star8Type);
     m_btnMenu->setText("Восьмиконечная звезда");
+}
+
+void MainWindow::selectMoving() {
+    m_canvas->setShapeType(Canvas::MovingType);
+    m_btnMenu->setText("Перемещение");
 }
 
 void MainWindow::clearShapes() {

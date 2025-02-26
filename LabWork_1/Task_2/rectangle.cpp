@@ -19,6 +19,14 @@ void Rectangle::draw(QPainter& painter, const Shape* selectedShape) const {
 
     if (pr) {
         painter.setBrush(Qt::black);
-        painter.drawEllipse(m_start.x() + (m_end.x() - m_start.x()) / 2, m_start.y() + (m_end.y() - m_start.y()) / 2, 4, 4);
+        painter.drawEllipse(QPoint(m_start.x() + (m_end.x() - m_start.x()) / 2, m_start.y() + (m_end.y() - m_start.y()) / 2), 3, 3);
     }
+}
+
+void Rectangle::updatePos(QPoint diff) {
+    for (int i = 0; i < vertices.size(); i++) {
+        vertices[i] += diff;
+    }
+    m_start += diff;
+    m_end += diff;
 }
