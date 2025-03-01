@@ -11,10 +11,10 @@ MainWindow::MainWindow(QWidget* parent)
     m_shapeMenu(new QMenu(this)),
     m_btnClear(new QPushButton("Очистить", this))
 {
-    setWindowTitle("Рисовалка фигур");
+    setWindowTitle("Paint");
     resize(800, 600);
 
-    m_btnMenu->setText("Фигуры");
+    m_btnMenu->setText("Меню");
     m_btnMenu->setFixedSize(100, 30);
     m_btnMenu->setPopupMode(QToolButton::InstantPopup);
 

@@ -34,7 +34,11 @@ void Canvas::mousePressEvent(QMouseEvent* event) {
         m_startPos = event->pos();
         m_currentPos = event->pos();
         m_isDrawing = true;
-        m_selectedShape = findShapeAt(event->pos());
+        if (!(event->modifiers() & Qt::ShiftModifier)) {
+            m_selectedShape = findShapeAt(event->pos());
+        } else {
+            m_isDrawing = false;
+        }
         update();
     }
 }
@@ -45,9 +49,18 @@ void Canvas::mouseMoveEvent(QMouseEvent* event) {
         m_selectedShape->updatePos(mouve);
     }
 
-    if (m_isDrawing) {
+    if (m_selectedShape && (event->modifiers() & Qt::ShiftModifier)) {
+        QPoint delta = event->pos() - m_currentPos;
+        double scaleFactor = 1.0 + (-delta.y()) * 0.01;
+        m_selectedShape->scale(scaleFactor);
         m_currentPos = event->pos();
         update();
+    }
+    else {
+        if (m_isDrawing) {
+            m_currentPos = event->pos();
+            update();
+        }
     }
 }
 
@@ -165,6 +178,10 @@ void Canvas::paintEvent(QPaintEvent* event) {
         shape->draw(painter, m_selectedShape);
     }
 
+    if (m_selectedShape) {
+        m_selectedShape->showInformation(painter, height());
+    }
+
     // Draw preview
     if (m_isDrawing) {
         painter.setPen(Qt::red);
@@ -249,6 +266,7 @@ void Canvas::paintEvent(QPaintEvent* event) {
 
 
 void Canvas::clear_shapes() {
+    m_selectedShape = nullptr;
     m_shapes.clear();
     update();
 }

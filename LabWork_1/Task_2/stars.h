@@ -11,9 +11,12 @@ public:
     void draw(QPainter& painter, const Shape* selectedShape) const override;
     QVector<QPoint> calculateVertices() const;
     void updatePos(QPoint diff) override;
+    double rastq(double x1, double x2, double y1, double y2);
+    double STriangle(QPoint p1, QPoint p2, QPoint p3);
+    void scale(double scalefactor) override;
+    void showInformation(QPainter& painter, int height) override;
 
 private:
-    QPoint m_center;
     int m_outerRadius;
     int m_innerRadius;
     int m_numPoints;

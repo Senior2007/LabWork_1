@@ -11,10 +11,11 @@ public:
     void draw(QPainter& painter, const Shape* selectedShape) const override;
     QVector<QPoint> calculateVertices() const;
     void updatePos(QPoint diff) override;
+    void scale(double scalefactor) override;
+    void showInformation(QPainter& painter, int height) override;
 
 private:
-    QPoint m_center;
-    int m_radius;
+    double m_radius;
 };
 
 #endif // HEXAGON_H
